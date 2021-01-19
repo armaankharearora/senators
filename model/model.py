@@ -62,7 +62,7 @@ for item in twitterhandles:
 
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 
-nlp = spacy.load("en_core_web_lg")
+nlp = spacy.load("en_core_web_sm")
 
 def euclidean_distance(x, y):
     return np.sqrt(np.sum((x - y) ** 2))
