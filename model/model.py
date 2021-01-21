@@ -17,6 +17,7 @@ from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
 import spacy
 
 import matplotlib.pyplot as plt
+import re
 
 
 f = open('../../creds.json', 'r')
@@ -39,7 +40,22 @@ with open('twitterhandles.csv') as csvfile:
 print(twitterhandles)
 
 
-# In[7]:
+#preprocess text in tweets by removing links, @UserNames, blank spaces, etc.
+def preprocessing_text(tweet):
+    #put everythin in lowercase
+    #table['tweet'] = table['tweet'].str.lower()
+    #Replace rt indicating that was a retweet
+    #table['tweet'] = table['tweet'].str.replace('rt', '')
+    #Replace occurences of mentioning @UserNames
+    #table['tweet'] = table['tweet'].replace(r'@\w+', '', regex=True)
+    #Replace links contained in the tweet
+    tweet = re.sub(r'http\S+', '', tweet)
+    tweet = re.sub(r'www.[^ ]+', '', tweet)
+    #remove numbers
+    tweet = re.sub(r'[0-9]+', '', tweet)
+    #replace special characters and puntuation marks
+    tweet = re.sub(r'[!"#$%&()*+,-./:;<=>?@[\]^_`{|}~]', '', tweet)
+    return tweet
 
 
 docs = []
@@ -48,7 +64,7 @@ for item in twitterhandles:
     print('********************************Getting Tweets for %s**********************************' % item['handle'])
     public_tweets = api.user_timeline(item['handle'])
     for tweet in public_tweets:
-        text += tweet.text + "\n"
+        text +=  preprocessing_text(tweet.text) + "\n"
     print(text)
 
     f = open(f"raw_data/{item['handle']}.txt", "w+", encoding= "utf-8")
@@ -110,7 +126,7 @@ for item1 in twitterhandles:
 
     f = open(f"similarity_data/{item1['handle']}.txt", "w+", encoding= "utf-8", newline='')
     sim_csv = csv.writer(f)
-    sim_csv.writerow(['name', 'spacy_sim', 'cosine_sim', 'euclidean_sim', 'party'])
+    sim_csv.writerow(['name', 'spacy_sim', 'cosine_sim', 'euclidean_dist', 'party'])
     j = 0
     for item2 in twitterhandles:
         f2 = open(f"raw_data/{item2['handle']}.txt", "r", encoding= "utf-8")

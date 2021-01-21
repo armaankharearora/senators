@@ -20,6 +20,12 @@ st.set_option('deprecation.showPyplotGlobalUse', False)
 
 
 
+def closest_point(a, b, c, x_0, y_0):
+    x = (b*(b*x_0 - a*y_0) - a*c) / (a*a + b*b)
+    y = (a*(-b*x_0 + a*y_0)-b*c) / (a*a + b*b)
+    return (x,y)
+
+
 
 with open('model/twitterhandles.csv') as csvfile:
      reader = csv.DictReader(csvfile)
@@ -42,6 +48,27 @@ with open('model/twitterhandles.csv') as csvfile:
              twitterhandle = row['Twitter Handle']
              party = row['Party']
 
+df =  pd.read_csv(f"model/similarity_data/{twitterhandle}.txt")
+sorted_df = df.sort_values(by=['cosine_sim'], ascending = False)
+
+party_df = sorted_df[sorted_df['party'] == party]
+not_party_df = sorted_df[sorted_df['party'] != party]
+#st.dataframe(party_df)
+
+
+
+ave_par_sim = party_df['cosine_sim'][:5].mean()
+ave_not_par_sim = not_party_df['cosine_sim'][:5].mean()
+st.subheader('Bipartisan Bridge Index')
+#score = (ave_not_par_sim / ave_par_sim)*100
+cords = closest_point(0.75, -1, 0, ave_par_sim, ave_not_par_sim)
+score = ((cords[0]+cords[1])/2) * 100
+score_txt = f'This Senators Score is {score:.2f}'
+st.markdown(score_txt)
+
+
+
+
 
 text = ""
 #public_tweets = api.user_timeline(twitterhandle)
@@ -63,23 +90,9 @@ plt.axis("off")
 plt.show()
 st.pyplot()
 
-st.subheader('Table comparing the similarity of tweets to all the other senators')
-st.markdown("Uses 3 different metrics - Spacy similarity (using word vectors), Cosine similarity, and Euclidean Distance to compare the senator to others.")
-df =  pd.read_csv(f"model/similarity_data/{twitterhandle}.txt")
-st.dataframe(df)  # Same as st.write(df)
 
-sorted_df = df.sort_values(by=['cosine_sim'], ascending = False)
 
-party_df = sorted_df[sorted_df['party'] == party]
-not_party_df = sorted_df[sorted_df['party'] != party]
-st.dataframe(party_df)
 
-ave_par_sim = party_df['cosine_sim'][:5].mean()
-ave_not_par_sim = not_party_df['cosine_sim'][:5].mean()
-st.subheader('Bipartisan Bridge Index')
-score = (ave_not_par_sim / ave_par_sim)*100
-score_txt = f'This Senators Score is {score:.2f}'
-st.markdown(score_txt)
 
 top_5 = df.nlargest(5, 'cosine_sim')
 #st.write(top_5)
@@ -122,4 +135,9 @@ nt.options = options
 nt.show('bof.html')
 html_file = open('bof.html', 'r')
 source_code = html_file.read()
-components.html(source_code, height = 900, width = 900)
+components.html(source_code, height = 800, width = 800)
+
+
+st.subheader('Table comparing the similarity of tweets to all the other senators')
+st.markdown("Uses 3 different metrics - Spacy similarity (using word vectors), Cosine similarity, and Euclidean Distance to compare the senator to others.")
+st.dataframe(df)  # Same as st.write(df)
