@@ -55,9 +55,9 @@ def preprocessing_text(tweet):
     #replace special characters and puntuation marks
     tweet = re.sub(r'[!"#$%&()*+,-./:;<=>?@[\]^_`{|}~]', '', tweet)
     return tweet
-
+    
+docs = []
 def refresh_tweets():
-    docs = []
     for item in twitterhandles:
         text = ""
         print('********************************Getting Tweets for %s**********************************' % item['handle'])
@@ -155,6 +155,6 @@ def refresh_bipar_indx():
         bipar.writerow([item['handle'], score])
 
 if __name__ == "__main__":
-    #refresh_tweets()
-    #refresh_sim_data()
+    refresh_tweets()
+    refresh_sim_data()
     refresh_bipar_indx()
