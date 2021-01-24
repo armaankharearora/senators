@@ -19,6 +19,9 @@ import spacy
 import matplotlib.pyplot as plt
 import re
 
+from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
+
+nlp = spacy.load("en_core_web_sm")
 
 f = open('../../creds.json', 'r')
 creds = json.loads(f.read())
@@ -26,10 +29,6 @@ auth = tweepy.OAuthHandler(creds["consumer_key"], creds["consumer_secret"])
 auth.set_access_token(creds["access_token"], creds["access_token_secret"])
 
 api = tweepy.API(auth)
-
-
-# In[3]:
-
 
 with open('twitterhandles.csv') as csvfile:
      reader = csv.DictReader(csvfile)
@@ -57,28 +56,21 @@ def preprocessing_text(tweet):
     tweet = re.sub(r'[!"#$%&()*+,-./:;<=>?@[\]^_`{|}~]', '', tweet)
     return tweet
 
+def refresh_tweets():
+    docs = []
+    for item in twitterhandles:
+        text = ""
+        print('********************************Getting Tweets for %s**********************************' % item['handle'])
+        public_tweets = api.user_timeline(item['handle'])
+        for tweet in public_tweets:
+            text +=  preprocessing_text(tweet.text) + "\n"
+        print(text)
 
-docs = []
-for item in twitterhandles:
-    text = ""
-    print('********************************Getting Tweets for %s**********************************' % item['handle'])
-    public_tweets = api.user_timeline(item['handle'])
-    for tweet in public_tweets:
-        text +=  preprocessing_text(tweet.text) + "\n"
-    print(text)
+        f = open(f"raw_data/{item['handle']}.txt", "w+", encoding= "utf-8")
+        f.write(text)
+        docs.append(text)
+        f.close()
 
-    f = open(f"raw_data/{item['handle']}.txt", "w+", encoding= "utf-8")
-    f.write(text)
-    docs.append(text)
-    f.close()
-
-
-# In[8]:
-
-
-from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
-
-nlp = spacy.load("en_core_web_sm")
 
 def euclidean_distance(x, y):
     return np.sqrt(np.sum((x - y) ** 2))
@@ -104,55 +96,65 @@ def calculate_similarity(text1, text2):
     compare = nlp(process_text(text2))
     return base.similarity(compare)
 
+def refresh_sim_data():
+    cv = TfidfVectorizer(stop_words='english', ngram_range=(1,2))
+    X = np.array(cv.fit_transform(docs).todense())
 
-# In[9]:
+    euclidean_distance(X[0], X[1])
+    cosine_similarity(X[0], X[1])
 
+    i = 0
+    for item1 in twitterhandles:
+        f = open(f"raw_data/{item1['handle']}.txt", "r", encoding= "utf-8")
+        text1 = f.read()
+        f.close()
 
-cv = TfidfVectorizer(stop_words='english', ngram_range=(1,2))
-X = np.array(cv.fit_transform(docs).todense())
+        f = open(f"similarity_data/{item1['handle']}.txt", "w+", encoding= "utf-8", newline='')
+        sim_csv = csv.writer(f)
+        sim_csv.writerow(['name', 'spacy_sim', 'cosine_sim', 'euclidean_dist', 'party'])
+        j = 0
+        for item2 in twitterhandles:
+            f2 = open(f"raw_data/{item2['handle']}.txt", "r", encoding= "utf-8")
+            text2 = f2.read()
+            f2.close()
+            s_sim = calculate_similarity(text1, text2)
+            e_sim = euclidean_distance(X[i], X[j])
+            c_sim = cosine_similarity(X[i], X[j])
+            print(item1['handle'], item2['handle'], s_sim, c_sim, e_sim, i, j, item2['party'])
+            sim_csv.writerow([item2['handle'], s_sim, c_sim, e_sim, item2['party']])
+            j += 1
 
-euclidean_distance(X[0], X[1])
-cosine_similarity(X[0], X[1])
+        i += 1
 
+def closest_point(a, b, c, x_0, y_0):
+    x = (b*(b*x_0 - a*y_0) - a*c) / (a*a + b*b)
+    y = (a*(-b*x_0 + a*y_0)-b*c) / (a*a + b*b)
+    return (x,y)
 
-# In[11]:
+def refresh_bipar_indx():
+    f = open(f"bipar_scores.csv", "w+", encoding= "utf-8", newline='')
+    bipar = csv.writer(f)
+    bipar.writerow(['name', 'score'])
+    for item in twitterhandles:
+        party = row['Party']
+        print(item)
+        df =  pd.read_csv(f"similarity_data/{item['handle']}.txt")
+        sorted_df = df.sort_values(by=['cosine_sim'], ascending = False)
+        party_df = sorted_df[sorted_df['party'] == party]
+        not_party_df = sorted_df[sorted_df['party'] != party]
+        #st.dataframe(party_df)
 
+        ave_par_sim = party_df['cosine_sim'][:5].mean()
+        ave_not_par_sim = not_party_df['cosine_sim'][:5].mean()
+        st.subheader('Bipartisan Bridge Index')
+        #score = (ave_not_par_sim / ave_par_sim)*100
+        cords = closest_point(0.75, -1, 0, ave_par_sim, ave_not_par_sim)
+        score = ((cords[0]+cords[1])/2) * 100
+        score_txt = f'This Senators Score is {score:.2f}'
+        print(score_txt)
+        bipar.writerow([item['handle'], score])
 
-i = 0
-for item1 in twitterhandles:
-    f = open(f"raw_data/{item1['handle']}.txt", "r", encoding= "utf-8")
-    text1 = f.read()
-    f.close()
-
-    f = open(f"similarity_data/{item1['handle']}.txt", "w+", encoding= "utf-8", newline='')
-    sim_csv = csv.writer(f)
-    sim_csv.writerow(['name', 'spacy_sim', 'cosine_sim', 'euclidean_dist', 'party'])
-    j = 0
-    for item2 in twitterhandles:
-        f2 = open(f"raw_data/{item2['handle']}.txt", "r", encoding= "utf-8")
-        text2 = f2.read()
-        f2.close()
-        s_sim = calculate_similarity(text1, text2)
-        e_sim = euclidean_distance(X[i], X[j])
-        c_sim = cosine_similarity(X[i], X[j])
-        print(item1['handle'], item2['handle'], s_sim, c_sim, e_sim, i, j, item2['party'])
-        sim_csv.writerow([item2['handle'], s_sim, c_sim, e_sim, item2['party']])
-        j += 1
-
-    i += 1
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
+if __name__ == "__main__":
+    #refresh_tweets()
+    #refresh_sim_data()
+    refresh_bipar_indx()

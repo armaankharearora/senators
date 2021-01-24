@@ -23,7 +23,9 @@ add_selectbox = st.sidebar.selectbox(
     ('Senator View', 'Summary')
 )
 if add_selectbox == 'Summary':
-    st.write(add_selectbox)
+    bipar_df = pd.read_csv('model/bipar_scores.csv')
+    st.dataframe(bipar_df)
+
 else:
     def closest_point(a, b, c, x_0, y_0):
         x = (b*(b*x_0 - a*y_0) - a*c) / (a*a + b*b)
@@ -58,8 +60,6 @@ else:
     not_party_df = sorted_df[sorted_df['party'] != party]
     #st.dataframe(party_df)
 
-
-
     ave_par_sim = party_df['cosine_sim'][:5].mean()
     ave_not_par_sim = not_party_df['cosine_sim'][:5].mean()
     st.subheader('Bipartisan Bridge Index')
@@ -68,10 +68,6 @@ else:
     score = ((cords[0]+cords[1])/2) * 100
     score_txt = f'This Senators Score is {score:.2f}'
     st.markdown(score_txt)
-
-
-
-
 
     text = ""
     #public_tweets = api.user_timeline(twitterhandle)
