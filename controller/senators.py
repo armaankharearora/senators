@@ -64,7 +64,7 @@ else:
     ave_not_par_sim = not_party_df['cosine_sim'][:5].mean()
     st.subheader('Bipartisan Bridge Index')
     #score = (ave_not_par_sim / ave_par_sim)*100
-    cords = closest_point(0.75, -1, 0, ave_par_sim, ave_not_par_sim)
+    cords = closest_point(1, -1, 0, ave_par_sim, ave_not_par_sim)
     score = ((cords[0]+cords[1])/2) * 100
     score_txt = f'This Senators Score is {score:.2f}'
     st.markdown(score_txt)
@@ -93,8 +93,11 @@ else:
     st.write(top_5)
 
     G=nx.Graph()
-
-    G.add_node(twitterhandle)
+    if party == 'R':
+        party_color = 'red'
+    else:
+        party_color ='blue'
+    G.add_node(twitterhandle, color = party_color)
 
     for index, row in top_5.iterrows():
         if row['name'] != twitterhandle:
@@ -109,10 +112,10 @@ else:
             bof_top_5 = bof_df.nlargest(5, 'cosine_sim')
             for bof_index, bof_row in bof_top_5.iterrows():
                 if bof_row['name'] != row['name']:
-                    if row['party'] == 'R':
+                    if bof_row['party'] == 'R':
                         party_color = 'red'
                     else:
-                        party_color ='blue'
+                        party_color = 'blue'
                     G.add_node(bof_row['name'], color = party_color)
                     G.add_edges_from([(row['name'], bof_row['name'], {'color': 'grey','weight': bof_row['cosine_sim']})])
 

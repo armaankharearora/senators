@@ -55,7 +55,7 @@ def preprocessing_text(tweet):
     #replace special characters and puntuation marks
     tweet = re.sub(r'[!"#$%&()*+,-./:;<=>?@[\]^_`{|}~]', '', tweet)
     return tweet
-    
+
 docs = []
 def refresh_tweets():
     for item in twitterhandles:
@@ -148,7 +148,7 @@ def refresh_bipar_indx():
         ave_not_par_sim = not_party_df['cosine_sim'][:5].mean()
         st.subheader('Bipartisan Bridge Index')
         #score = (ave_not_par_sim / ave_par_sim)*100
-        cords = closest_point(0.75, -1, 0, ave_par_sim, ave_not_par_sim)
+        cords = closest_point(1, -1, 0, ave_par_sim, ave_not_par_sim)
         score = ((cords[0]+cords[1])/2) * 100
         score_txt = f'This Senators Score is {score:.2f}'
         print(score_txt)
