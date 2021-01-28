@@ -21,6 +21,10 @@ import re
 
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 
+with open('stopwords.txt', 'r', encoding='utf8', errors='ignore') as txtfile:
+        stopwords_txt = txtfile.read()
+        mystopwords = stopwords_txt.split()
+
 nlp = spacy.load("en_core_web_sm")
 
 f = open('../../creds.json', 'r')
@@ -97,7 +101,7 @@ def calculate_similarity(text1, text2):
     return base.similarity(compare)
 
 def refresh_sim_data():
-    cv = TfidfVectorizer(stop_words='english', ngram_range=(1,2))
+    cv = TfidfVectorizer(stop_words=set(mystopwords), ngram_range=(1,2))
     X = np.array(cv.fit_transform(docs).todense())
 
     euclidean_distance(X[0], X[1])

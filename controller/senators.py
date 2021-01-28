@@ -16,9 +16,12 @@ import pylab as pyl
 import streamlit.components.v1 as components
 
 from pyvis.network  import Network
+with open('model/stopwords.txt', 'r', encoding='utf8', errors='ignore') as txtfile:
+        stopwords_txt = txtfile.read()
+        mystopwords = stopwords_txt.split()
 
-stopwords = set(STOPWORDS)
-stopwords.update(["may", "US", "https", "t", "co", "RT", "S", 'U', 'amp', 'must' 'will', 've', 'si02', 'today', 'Today', 'See', 'FY21', 'GovKemp', 'de', 'lo', 'la', 'le', 'el', 'Si', 're', 'QampA', 'the', 'fwd', 'ovr', 'm', 'yet'])
+stopwords = set(mystopwords)
+stopwords.update(["may", "US", "https", "t", "co", "RT", "S", 'U', 'amp', 'must' 'will', 've', 'si02', 'today','Sen', 'Today', 'See', 'FY21', 'GovKemp', 'de', 'lo', 'la', 'le', 'el', 'Si', 're', 'QampA', 'the', 'fwd', 'ovr', 'm', 'yet'])
 
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
