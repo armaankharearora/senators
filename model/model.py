@@ -14,16 +14,21 @@ import pandas as pd
 from os import path
 from PIL import Image
 from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
+from nltk.corpus import stopwords
 import spacy
 
 import matplotlib.pyplot as plt
 import re
 
+from sklearn.feature_extraction import text
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 
 with open('stopwords.txt', 'r', encoding='utf8', errors='ignore') as txtfile:
         stopwords_txt = txtfile.read()
         mystopwords = stopwords_txt.split()
+
+tfidf_stop_words = text.ENGLISH_STOP_WORDS.union(mystopwords)
+tfidf_stop_words = [x.lower() for x in tfidf_stop_words]
 
 nlp = spacy.load("en_core_web_sm")
 
@@ -101,7 +106,7 @@ def calculate_similarity(text1, text2):
     return base.similarity(compare)
 
 def refresh_sim_data():
-    cv = TfidfVectorizer(stop_words=set(mystopwords), ngram_range=(1,2))
+    cv = TfidfVectorizer(stop_words=tfidf_stop_words, ngram_range=(1,2))
     X = np.array(cv.fit_transform(docs).todense())
 
     euclidean_distance(X[0], X[1])
@@ -159,6 +164,6 @@ def refresh_bipar_indx():
         bipar.writerow([item['handle'], score])
 
 if __name__ == "__main__":
-    refresh_tweets()
+    #refresh_tweets()
     refresh_sim_data()
     refresh_bipar_indx()
