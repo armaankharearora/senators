@@ -164,6 +164,6 @@ def refresh_bipar_indx():
         bipar.writerow([item['handle'], score])
 
 if __name__ == "__main__":
-    #refresh_tweets()
+    refresh_tweets()
     refresh_sim_data()
     refresh_bipar_indx()
