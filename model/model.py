@@ -22,6 +22,7 @@ import re
 
 from sklearn.feature_extraction import text
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
+import sys
 
 with open('stopwords.txt', 'r', encoding='utf8', errors='ignore') as txtfile:
         stopwords_txt = txtfile.read()
@@ -143,9 +144,9 @@ def closest_point(a, b, c, x_0, y_0):
 def refresh_bipar_indx():
     f = open(f"bipar_scores.csv", "w+", encoding= "utf-8", newline='')
     bipar = csv.writer(f)
-    bipar.writerow(['name', 'score'])
+    bipar.writerow(['name', 'score', 'party sim', 'other party sim', 'party'])
     for item in twitterhandles:
-        party = row['Party']
+        party = item['party']
         print(item)
         df =  pd.read_csv(f"similarity_data/{item['handle']}.txt")
         sorted_df = df.sort_values(by=['cosine_sim'], ascending = False)
@@ -161,9 +162,13 @@ def refresh_bipar_indx():
         score = ((cords[0]+cords[1])/2) * 100
         score_txt = f'This Senators Score is {score:.2f}'
         print(score_txt)
-        bipar.writerow([item['handle'], score])
+        bipar.writerow([item['handle'], score, ave_par_sim, ave_not_par_sim, party])
 
 if __name__ == "__main__":
-    refresh_tweets()
-    refresh_sim_data()
-    refresh_bipar_indx()
+    print(sys.argv)
+    if 't' in sys.argv:
+        refresh_tweets()
+    if 's' in sys.argv:
+        refresh_sim_data()
+    if 'b' in sys.argv:
+        refresh_bipar_indx()
