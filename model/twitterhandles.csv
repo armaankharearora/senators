@@ -1,14 +1,14 @@
 State,Name,Twitter Handle,Party
 AK,Lisa Murkowski,@lisamurkowski,R
 AK,Dan Sullivan,@SenDanSullivan,R
-AL,Doug Jones,@SenDougJones,D
+AL,Tommy Tuberville,@TTuberville,R
 AL,Richard C. Shelby,@SenShelby,R
 AR,John Boozman,@JohnBoozman,R
 AR,Tom Cotton,@SenTomCotton,R
 AZ,Mark Kelly,@CaptMarkKelly,D
 AZ,Kyrsten Sinema,@SenatorSinema,D
 CA,Dianne Feinstein,@SenFeinstein,D
-CA,Alex Padilla,@AlexPadilla4CA,D
+CA,Alex Padilla,@SenAlexPadilla,D
 CO,Michael F. Bennet,@SenatorBennet,D
 CO,John Hickenlooper,@Hickenlooper,D
 CT,Richard Blumenthal,@SenBlumenthal,D
@@ -18,7 +18,7 @@ DE,Christopher A. Coons,@ChrisCoons,D
 FL,Marco Rubio,@SenRubioPress,R
 FL,Rick Scott,@SenRickScott,R
 GA,Jon Ossoff,@ossoff,D
-GA,Raphael Warnock,@ReverendWarnock,D
+GA,Raphael Warnock,@SenatorWarnock,D
 HI,Mazie K. Hirono,@maziehirono,D
 HI,Brian Schatz,@SenBrianSchatz,D
 IA,Joni Ernst,@SenJoniErnst,R
@@ -65,7 +65,7 @@ NM,Martin Heinrich,@MartinHeinrich,D
 NM,Ben Ray Luján,@benraylujan,D
 NV,Catherine Cortez Masto,@SenCortezMasto,D
 NV,Jacky Rosen,@SenJackyRosen,D
-NY,Kirsten E. Gillibrand,@gillibrandny,D
+NY,Kirsten E. Gillibrand,@SenGillibrand,D
 NY,Charles E. Schumer,@SenSchumer,D
 OH,Sherrod Brown,@SenSherrodBrown,D
 OH,Rob Portman,@senrobportman,R
@@ -98,4 +98,4 @@ WI,Ron Johnson,@SenRonJohnson,R
 WV,Shelley Moore Capito,@SenCapito,R
 WV,"Joe Manchin, III",@Sen_JoeManchin,D
 WY,John Barrasso,@SenJohnBarrasso,R
-WY,Cynthia Lummis,@CynthiaMLummis,R
+WY,Cynthia Lummis,@SenLummis,R
