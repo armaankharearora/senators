@@ -17,12 +17,22 @@ from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
 from nltk.corpus import stopwords
 import spacy
 
+
+import os  # for os.path.basename
+
 import matplotlib.pyplot as plt
+import matplotlib as mpl
+
+from sklearn.manifold import MDS
 import re
 
 from sklearn.feature_extraction import text
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity as sk_cos_sim
 import sys
+
+from sklearn.cluster import KMeans
+
 
 with open('stopwords.txt', 'r', encoding='utf8', errors='ignore') as txtfile:
         stopwords_txt = txtfile.read()
@@ -66,7 +76,7 @@ def preprocessing_text(tweet):
     tweet = re.sub(r'[!"#$%&()*+,-./:;<=>?@[\]^_`{|}~]', '', tweet)
     return tweet
 
-docs = []
+
 def refresh_tweets():
     for item in twitterhandles:
         text = ""
@@ -78,8 +88,16 @@ def refresh_tweets():
 
         f = open(f"raw_data/{item['handle']}.txt", "w+", encoding= "utf-8")
         f.write(text)
+        f.close()
+
+def read_tweet_docs():
+    docs = []
+    for item in twitterhandles:
+        f = open(f"raw_data/{item['handle']}.txt", "r", encoding= "utf-8")
+        text = f.read()
         docs.append(text)
         f.close()
+    return docs
 
 
 def euclidean_distance(x, y):
@@ -106,9 +124,116 @@ def calculate_similarity(text1, text2):
     compare = nlp(process_text(text2))
     return base.similarity(compare)
 
-def refresh_sim_data():
+def tweet_clusters():
+    docs = read_tweet_docs()
     cv = TfidfVectorizer(stop_words=tfidf_stop_words, ngram_range=(1,2))
-    X = np.array(cv.fit_transform(docs).todense())
+    tfidf_matrix = cv.fit_transform(docs)
+    terms = cv.get_feature_names()
+
+    dist = 1 - sk_cos_sim(tfidf_matrix)
+
+    num_clusters = 5
+    km = KMeans(n_clusters=num_clusters)
+    km.fit(tfidf_matrix)
+    clusters = km.labels_.tolist()
+    print(clusters)
+    senators = {'name': twitterhandles, 'cluster': clusters}
+    frame = pd.DataFrame(senators, index = [clusters] , columns = ['name', 'cluster'])
+    print(frame.head())
+
+
+    print("Top terms per cluster:")
+    print()
+    #sort cluster centers by proximity to centroid
+    order_centroids = km.cluster_centers_.argsort()[:, ::-1]
+
+    for i in range(num_clusters):
+        print("Cluster %d words:" % i, end='')
+
+        for ind in order_centroids[i, :6]: #replace 6 with n words per cluster
+            print(' %s' % terms[ind], end=',')
+        print() #add whitespace
+        print() #add whitespace
+
+        print("Cluster %d names:" % i, end='')
+        for title in frame.loc[i]['name'].values.tolist():
+            print(' %s,' % title, end='')
+        print() #add whitespace
+        print() #add whitespace
+
+    print()
+    print()
+    #set up colors per clusters using a dict
+    cluster_colors = {0: '#1b9e77', 1: '#d95f02', 2: '#7570b3', 3: '#e7298a', 4: '#66a61e'}
+
+    #set up cluster names using a dict
+    cluster_names = {0: 'Family, home, war',
+                     1: 'Police, killed, murders',
+                     2: 'Father, New York, brothers',
+                     3: 'Dance, singing, love',
+                     4: 'Killed, soldiers, captain'}
+
+    MDS()
+
+    # convert two components as we're plotting points in a two-dimensional plane
+    # "precomputed" because we provide a distance matrix
+    # we will also specify `random_state` so the plot is reproducible.
+    mds = MDS(n_components=2, dissimilarity="precomputed", random_state=1)
+
+    pos = mds.fit_transform(dist)  # shape (n_components, n_samples)
+
+    xs, ys = pos[:, 0], pos[:, 1]
+    print()
+    print()
+        #create data frame that has the result of the MDS plus the cluster numbers and titles
+    df = pd.DataFrame(dict(x=xs, y=ys, label=clusters, title=twitterhandles))
+
+    #group by cluster
+    groups = df.groupby('label')
+
+
+    # set up plot
+    fig, ax = plt.subplots(figsize=(17, 9)) # set size
+    ax.margins(0.05) # Optional, just adds 5% padding to the autoscaling
+
+    #iterate through groups to layer the plot
+    #note that I use the cluster_name and cluster_color dicts with the 'name' lookup to return the appropriate color/label
+    for name, group in groups:
+        ax.plot(group.x, group.y, marker='o', linestyle='', ms=12,
+                label=cluster_names[name], color=cluster_colors[name],
+                mec='none')
+        ax.set_aspect('auto')
+        ax.tick_params(\
+            axis= 'x',          # changes apply to the x-axis
+            which='both',      # both major and minor ticks are affected
+            bottom='off',      # ticks along the bottom edge are off
+            top='off',         # ticks along the top edge are off
+            labelbottom='off')
+        ax.tick_params(\
+            axis= 'y',         # changes apply to the y-axis
+            which='both',      # both major and minor ticks are affected
+            left='off',      # ticks along the bottom edge are off
+            top='off',         # ticks along the top edge are off
+            labelleft='off')
+
+    ax.legend(numpoints=1)  #show legend with only 1 point
+
+    #add label in x,y position with the label as the film title
+    for i in range(len(df)):
+        ax.text(df.loc[i]['x'], df.loc[i]['y'], df.loc[i]['title'], size=8)
+
+
+
+    plt.show() #show the plot
+
+    #uncomment the below to save the plot if need be
+    #plt.savefig('clusters_small_noaxes.png', dpi=200)
+
+def refresh_sim_data():
+    docs = read_tweet_docs()
+    cv = TfidfVectorizer(stop_words=tfidf_stop_words, ngram_range=(1,2))
+    tfidf_matrix = cv.fit_transform(docs)
+    X = np.array(tfidf_matrix.todense())
 
     euclidean_distance(X[0], X[1])
     cosine_similarity(X[0], X[1])
@@ -172,3 +297,5 @@ if __name__ == "__main__":
         refresh_sim_data()
     if 'b' in sys.argv:
         refresh_bipar_indx()
+    if "c" in sys.argv:
+        tweet_clusters()

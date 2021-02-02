@@ -33,19 +33,25 @@ if add_selectbox == 'Summary':
     topic_df = pd.read_csv('model/bipar_scores.csv')
     st.subheader('Table illustrating scores of all senators')
     st.dataframe(topic_df)
+    st.write("Total")
+    st.write(topic_df.describe())
     score_types = ["party sim", "other party sim"]
+    st.write("Democrats")
+    st.write(topic_df[topic_df['party'] == 'D'].describe())
+    st.write("Republicans")
+    st.write(topic_df[topic_df['party'] == 'R'].describe())
     for item in score_types:
         st.write(item)
         st.write("D")
         hist_values = np.histogram(
-            topic_df[topic_df['party'] == 'D'][item], bins=20)[0]
+            topic_df[topic_df['party'] == 'D'][item], bins=10)[0]
         st.bar_chart(hist_values)
-
         st.write(item)
         st.write("R")
         hist_values = np.histogram(
-            topic_df[topic_df['party'] == 'R'][item], bins=20)[0]
+            topic_df[topic_df['party'] == 'R'][item], bins=10)[0]
         st.bar_chart(hist_values)
+
 
     topic_top_5 = topic_df.nlargest(5, 'score')
     st.subheader('Table and worldcloud for senators with the highest topicality')
