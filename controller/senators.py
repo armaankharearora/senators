@@ -30,6 +30,21 @@ add_selectbox = st.sidebar.selectbox(
     ('Senator View', 'Summary')
 )
 if add_selectbox == 'Summary':
+    f = open(f"model/cluster_file.json", "r", encoding= "utf-8")
+    text = f.read()
+    cluster_array = json.loads(text)
+    index = 0
+    for item in cluster_array:
+        index = index + 1
+        st.subheader(f"Cluster {index}")
+        st.markdown("#### Words")
+        st.write(", ".join(item["words"]))
+        senator_names  = []
+        for item2 in item["senators"]:
+            senator_names.append(item2["handle"])
+        st.markdown("#### Senators")
+        st.write(", ".join(senator_names))
+
     topic_df = pd.read_csv('model/bipar_scores.csv')
     st.subheader('Table illustrating scores of all senators')
     st.dataframe(topic_df)
@@ -88,6 +103,7 @@ if add_selectbox == 'Summary':
     plt.axis("off")
     plt.show()
     st.pyplot()
+
 
 
 else:

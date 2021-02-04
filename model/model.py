@@ -32,7 +32,7 @@ from sklearn.metrics.pairwise import cosine_similarity as sk_cos_sim
 import sys
 
 from sklearn.cluster import KMeans
-
+import json
 
 with open('stopwords.txt', 'r', encoding='utf8', errors='ignore') as txtfile:
         stopwords_txt = txtfile.read()
@@ -147,22 +147,34 @@ def tweet_clusters():
     #sort cluster centers by proximity to centroid
     order_centroids = km.cluster_centers_.argsort()[:, ::-1]
 
+    cluster_array = []
     for i in range(num_clusters):
-        print("Cluster %d words:" % i, end='')
+        cluster = {"words": [], "senators": []}
+        #print("Cluster %d words:" % i, end='')
 
         for ind in order_centroids[i, :6]: #replace 6 with n words per cluster
-            print(' %s' % terms[ind], end=',')
+            #print(' %s' % terms[ind], end=',')
+            cluster["words"].append(terms[ind])
         print() #add whitespace
         print() #add whitespace
 
-        print("Cluster %d names:" % i, end='')
+        #print("Cluster %d names:" % i, end='')
         for title in frame.loc[i]['name'].values.tolist():
-            print(' %s,' % title, end='')
+            #print(' %s,' % title, end='')
+            cluster["senators"].append(title)
+
+        cluster_array.append(cluster)
+        #print(json.dumps(cluster))
         print() #add whitespace
         print() #add whitespace
 
     print()
     print()
+    print(json.dumps(cluster_array))
+    cluster_file = open("cluster_file.json", "w")
+    cluster_file.write(json.dumps(cluster_array))
+    cluster_file.close()
+
     #set up colors per clusters using a dict
     cluster_colors = {0: '#1b9e77', 1: '#d95f02', 2: '#7570b3', 3: '#e7298a', 4: '#66a61e'}
 
@@ -224,7 +236,7 @@ def tweet_clusters():
 
 
 
-    plt.show() #show the plot
+    #plt.show() #show the plot
 
     #uncomment the below to save the plot if need be
     #plt.savefig('clusters_small_noaxes.png', dpi=200)
