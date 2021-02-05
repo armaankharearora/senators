@@ -132,7 +132,7 @@ def tweet_clusters():
 
     dist = 1 - sk_cos_sim(tfidf_matrix)
 
-    num_clusters = 5
+    num_clusters = 10
     km = KMeans(n_clusters=num_clusters)
     km.fit(tfidf_matrix)
     clusters = km.labels_.tolist()
@@ -152,7 +152,7 @@ def tweet_clusters():
         cluster = {"words": [], "senators": []}
         #print("Cluster %d words:" % i, end='')
 
-        for ind in order_centroids[i, :6]: #replace 6 with n words per cluster
+        for ind in order_centroids[i, :10]: #replace 6 with n words per cluster
             #print(' %s' % terms[ind], end=',')
             cluster["words"].append(terms[ind])
         print() #add whitespace
