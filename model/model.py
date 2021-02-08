@@ -211,9 +211,9 @@ def tweet_clusters():
     #iterate through groups to layer the plot
     #note that I use the cluster_name and cluster_color dicts with the 'name' lookup to return the appropriate color/label
     for name, group in groups:
-        ax.plot(group.x, group.y, marker='o', linestyle='', ms=12,
-                label=cluster_names[name], color=cluster_colors[name],
-                mec='none')
+        #ax.plot(group.x, group.y, marker='o', linestyle='', ms=12,
+        #        label=cluster_names[name], color=cluster_colors[name],
+        #        mec='none')
         ax.set_aspect('auto')
         ax.tick_params(\
             axis= 'x',          # changes apply to the x-axis
