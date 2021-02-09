@@ -15,6 +15,10 @@ import networkx as nx
 import pylab as pyl
 import streamlit.components.v1 as components
 
+import altair as alt
+from vega_datasets import data
+
+
 from pyvis.network  import Network
 with open('model/stopwords.txt', 'r', encoding='utf8', errors='ignore') as txtfile:
         stopwords_txt = txtfile.read()
@@ -24,6 +28,44 @@ stopwords = set(mystopwords)
 stopwords.update(["may", "US", "https", "t", "co", "RT", "S", 'U', 'amp', 'must' 'will', 've', 'si02', 'today','Sen', 'Today', 'See', 'FY21', 'GovKemp', 'de', 'lo', 'la', 'le', 'el', 'Si', 're', 'QampA', 'the', 'fwd', 'ovr', 'm', 'yet'])
 
 st.set_option('deprecation.showPyplotGlobalUse', False)
+def show_map(senators):
+    states_df = pd.read_csv('model/twitterhandles.csv')
+    lat = []
+    long = []
+    party = []
+    new_df = states_df.loc[states_df['Twitter Handle'].isin(senators)]
+
+    states = alt.topo_feature(data.us_10m.url, feature='states')
+    line_source = pd.DataFrame({
+        'longitude': new_df['long'],
+        'latitude': new_df['lat'],
+        'party': new_df['Party']
+    })
+    background = alt.Chart(states).mark_geoshape(
+        fill='lightgray',
+        stroke='white'
+    ).properties(
+        width=800,
+        height=500
+    ).project('albersUsa')
+    point_path = line_path = alt.Chart(line_source).mark_circle().encode(
+        longitude="longitude:Q",
+        latitude="latitude:Q",
+        size=alt.value(60),
+        color=alt.Color('party',
+                   scale=alt.Scale(
+            domain=['R', 'D'],
+            range=['red', 'blue']))
+
+    )
+    #line_path = alt.Chart(line_source).mark_line().encode(
+    #    longitude="longitude:Q",
+    #    latitude="latitude:Q",
+    #    order='order:O'
+    #)
+
+    st.altair_chart((background + point_path + line_path))
+
 
 add_selectbox = st.sidebar.selectbox(
     "What would you like to see?",
@@ -44,7 +86,7 @@ if add_selectbox == 'Summary':
             senator_names.append(item2["handle"])
         st.markdown("#### Senators")
         st.write(", ".join(senator_names))
-
+        show_map(senator_names)
     topic_df = pd.read_csv('model/bipar_scores.csv')
     st.subheader('Table illustrating scores of all senators')
     st.dataframe(topic_df)
@@ -177,7 +219,9 @@ else:
         party_color = 'red'
     else:
         party_color ='blue'
+    senators_plot = []
     G.add_node(twitterhandle, color = party_color)
+    senators_plot.append(twitterhandle)
 
     for index, row in top_5.iterrows():
         if row['name'] != twitterhandle:
@@ -186,6 +230,7 @@ else:
             else:
                 party_color ='blue'
             G.add_node(row['name'], color = party_color)
+            senators_plot.append(row['name'])
             G.add_edges_from([(twitterhandle, row['name'], {'color': 'grey','weight': row['cosine_sim']})])
 
             bof_df = pd.read_csv(f"model/similarity_data/{row['name']}.txt")
@@ -197,6 +242,7 @@ else:
                     else:
                         party_color = 'blue'
                     G.add_node(bof_row['name'], color = party_color)
+                    senators_plot.append(bof_row['name'])
                     G.add_edges_from([(row['name'], bof_row['name'], {'color': 'grey','weight': bof_row['cosine_sim']})])
 
     pos = nx.spring_layout(G, weight = 'weight')
@@ -223,6 +269,7 @@ else:
     source_code = html_file.read()
     components.html(source_code, height = 800, width = 800)
 
+    show_map(senators_plot)
 
     st.subheader('Table comparing the similarity of tweets to all the other senators')
     st.markdown("Uses 3 different metrics - Spacy similarity (using word vectors), Cosine similarity, and Euclidean Distance to compare the senator to others.")

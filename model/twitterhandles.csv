@@ -1,101 +1,101 @@
-State,Name,Twitter Handle,Party
-AK,Lisa Murkowski,@lisamurkowski,R
-AK,Dan Sullivan,@SenDanSullivan,R
-AL,Tommy Tuberville,@SenTuberville,R
-AL,Richard C. Shelby,@SenShelby,R
-AR,John Boozman,@JohnBoozman,R
-AR,Tom Cotton,@SenTomCotton,R
-AZ,Mark Kelly,@CaptMarkKelly,D
-AZ,Kyrsten Sinema,@SenatorSinema,D
-CA,Dianne Feinstein,@SenFeinstein,D
-CA,Alex Padilla,@SenAlexPadilla,D
-CO,Michael F. Bennet,@SenatorBennet,D
-CO,John Hickenlooper,@Hickenlooper,D
-CT,Richard Blumenthal,@SenBlumenthal,D
-CT,Christopher Murphy,@ChrisMurphyCT,D
-DE,Thomas R. Carper,@SenatorCarper,D
-DE,Christopher A. Coons,@ChrisCoons,D
-FL,Marco Rubio,@marcorubio,R
-FL,Rick Scott,@SenRickScott,R
-GA,Jon Ossoff,@ossoff,D
-GA,Raphael Warnock,@SenatorWarnock,D
-HI,Mazie K. Hirono,@maziehirono,D
-HI,Brian Schatz,@SenBrianSchatz,D
-IA,Joni Ernst,@SenJoniErnst,R
-IA,Chuck Grassley,@ChuckGrassley,R
-ID,Mike Crapo,@MikeCrapo,R
-ID,James E. Risch,@SenatorRisch,R
-IL,Tammy Duckworth,@SenDuckworth,D
-IL,Richard J. Durbin,@SenatorDurbin,D
-IN,Mike Braun,@SenatorBraun,R
-IN,Todd Young,@SenToddYoung,R
-KS,Jerry Moran,@JerryMoran,R
-KS,Roger Marshall,@RogerMarshallMD,R
-KY,Mitch McConnell,@LeaderMcConnell,R
-KY,Rand Paul,@RandPaul,R
-LA,Bill Cassidy,@SenBillCassidy,R
-LA,John Kennedy,@SenJohnKennedy,R
-MA,Edward J. Markey,@SenMarkey,D
-MA,Elizabeth Warren,@SenWarren,D
-MD,Benjamin L. Cardin,@SenatorCardin,D
-MD,Chris Van Hollen,@ChrisVanHollen,D
-ME,Susan M. Collins,@SenatorCollins,R
-ME,"Angus S. King, Jr.",@SenAngusKing,D
-MI,Gary C. Peters,@SenGaryPeters,D
-MI,Debbie Stabenow,@SenStabenow,D
-MN,Amy Klobuchar,@SenAmyKlobuchar,D
-MN ,Tina Smith,@SenTinaSmith,D
-MO ,Roy Blunt,@RoyBlunt,R
-MO,Josh Hawley,@SenHawleyPress,R
-MS,Cindy Hyde-Smith,@SenHydeSmith,R
-MS,Roger F. Wicker,@SenatorWicker,R
-MT,Steve Daines,@SteveDaines,R
-MT,Jon Tester,@SenatorTester,D
-NC,Richard Burr,@SenatorBurr,R
-NC,Thom Tillis,@SenThomTillis,R
-ND,Kevin Cramer,@SenKevinCramer,R
-ND,John Hoeven,@SenJohnHoeven,R
-NE,Deb Fischer,@SenatorFischer,R
-NE,Ben Sasse,@SenSasse,R
-NH,Margaret Wood Hassan,@SenatorHassan,D
-NH,Jeanne Shaheen,@SenatorShaheen,D
-NJ,Cory A. Booker,@SenBooker,D
-NJ,Robert Menendez,@SenatorMenendez,D
-NM,Martin Heinrich,@MartinHeinrich,D
-NM,Ben Ray Luján,@benraylujan,D
-NV,Catherine Cortez Masto,@SenCortezMasto,D
-NV,Jacky Rosen,@SenJackyRosen,D
-NY,Kirsten E. Gillibrand,@SenGillibrand,D
-NY,Charles E. Schumer,@SenSchumer,D
-OH,Sherrod Brown,@SenSherrodBrown,D
-OH,Rob Portman,@senrobportman,R
-OK,James M. Inhofe,@JimInhofe,R
-OK,James Lankford,@SenatorLankford,R
-OR,Jeff Merkley,@SenJeffMerkley,D
-OR,Ron Wyden,@RonWyden,D
-PA,"Robert P. Casey, Jr.",@SenBobCasey,D
-PA,Patrick J. Toomey,@SenToomey,R
-RI,Jack Reed,@SenJackReed,D
-RI,Sheldon Whitehouse,@SenWhitehouse,D
-SC,Lindsey Graham,@LindseyGrahamSC,R
-SC,Tim Scott,@SenatorTimScott,R
-SD,Mike Rounds,@SenatorRounds,R
-SD,John Thune,@SenJohnThune,R
-TN,Lamar Alexander,@SenAlexander,R
-TN,Marsha Blackburn,@MarshaBlackburn,R
-TX,John Cornyn,@JohnCornyn,R
-TX,Ted Cruz,@SenTedCruz,R
-UT,Mike Lee,@SenMikeLee,R
-UT,Mitt Romney,@SenatorRomney,R
-VA,Tim Kaine,@timkaine,D
-VA,Mark R. Warner,@MarkWarner,D
-VT,Patrick J. Leahy,@SenatorLeahy,D
-VT,Bernard Sanders,@BernieSanders,D
-WA,Maria Cantwell,@SenatorCantwell,D
-WA,Patty Murray,@PattyMurray,D
-WI,Tammy Baldwin,@SenatorBaldwin,D
-WI,Ron Johnson,@SenRonJohnson,R
-WV,Shelley Moore Capito,@SenCapito,R
-WV,"Joe Manchin, III",@Sen_JoeManchin,D
-WY,John Barrasso,@SenJohnBarrasso,R
-WY,Cynthia Lummis,@SenLummis,R
+State,Name,Twitter Handle,Party,lat,long
+AK,Lisa Murkowski,@lisamurkowski,R,63.588753,-154.493062
+AK,Dan Sullivan,@SenDanSullivan,R,63.588753,-154.493062
+AL,Tommy Tuberville,@SenTuberville,R,32.318231,-86.902298
+AL,Richard C. Shelby,@SenShelby,R,32.318231,-86.902298
+AR,John Boozman,@JohnBoozman,R,35.20105,-91.831833
+AR,Tom Cotton,@SenTomCotton,R,35.20105,-91.831833
+AZ,Mark Kelly,@CaptMarkKelly,D,34.048928,-111.093731
+AZ,Kyrsten Sinema,@SenatorSinema,D,34.048928,-111.093731
+CA,Dianne Feinstein,@SenFeinstein,D,36.778261,-119.417932
+CA,Alex Padilla,@SenAlexPadilla,D,36.778261,-119.417932
+CO,Michael F. Bennet,@SenatorBennet,D,39.550051,-105.782067
+CO,John Hickenlooper,@Hickenlooper,D,39.550051,-105.782067
+CT,Richard Blumenthal,@SenBlumenthal,D,41.603221,-73.087749
+CT,Christopher Murphy,@ChrisMurphyCT,D,41.603221,-73.087749
+DE,Thomas R. Carper,@SenatorCarper,D,38.910832,-75.52767
+DE,Christopher A. Coons,@ChrisCoons,D,38.910832,-75.52767
+FL,Marco Rubio,@marcorubio,R,27.664827,-81.515754
+FL,Rick Scott,@SenRickScott,R,27.664827,-81.515754
+GA,Jon Ossoff,@ossoff,D,32.157435,-82.907123
+GA,Raphael Warnock,@SenatorWarnock,D,32.157435,-82.907123
+HI,Mazie K. Hirono,@maziehirono,D,19.898682,-155.665857
+HI,Brian Schatz,@SenBrianSchatz,D,19.898682,-155.665857
+IA,Joni Ernst,@SenJoniErnst,R,41.878003,-93.097702
+IA,Chuck Grassley,@ChuckGrassley,R,41.878003,-93.097702
+ID,Mike Crapo,@MikeCrapo,R,44.068202,-114.742041
+ID,James E. Risch,@SenatorRisch,R,44.068202,-114.742041
+IL,Tammy Duckworth,@SenDuckworth,D,40.633125,-89.398528
+IL,Richard J. Durbin,@SenatorDurbin,D,40.633125,-89.398528
+IN,Mike Braun,@SenatorBraun,R,40.551217,-85.602364
+IN,Todd Young,@SenToddYoung,R,40.551217,-85.602364
+KS,Jerry Moran,@JerryMoran,R,39.011902,-98.484246
+KS,Roger Marshall,@RogerMarshallMD,R,39.011902,-98.484246
+KY,Mitch McConnell,@LeaderMcConnell,R,37.839333,-84.270018
+KY,Rand Paul,@RandPaul,R,37.839333,-84.270018
+LA,Bill Cassidy,@SenBillCassidy,R,31.244823,-92.145024
+LA,John Kennedy,@SenJohnKennedy,R,31.244823,-92.145024
+MA,Edward J. Markey,@SenMarkey,D,42.407211,-71.382437
+MA,Elizabeth Warren,@SenWarren,D,42.407211,-71.382437
+MD,Benjamin L. Cardin,@SenatorCardin,D,39.045755,-76.641271
+MD,Chris Van Hollen,@ChrisVanHollen,D,39.045755,-76.641271
+ME,"Angus S. King, Jr.",@SenAngusKing,D,45.253783,-69.445469
+ME,Susan M. Collins,@SenatorCollins,R,45.253783,-69.445469
+MI,Gary C. Peters,@SenGaryPeters,D,44.314844,-85.602364
+MI,Debbie Stabenow,@SenStabenow,D,44.314844,-85.602364
+MN,Amy Klobuchar,@SenAmyKlobuchar,D,46.729553,-94.6859
+MN,Tina Smith,@SenTinaSmith,D,46.729553,-94.6859
+MO,Josh Hawley,@SenHawleyPress,R,37.964253,-91.831833
+MO,Roy Blunt,@RoyBlunt,R,37.964253,-91.831833
+MS,Cindy Hyde-Smith,@SenHydeSmith,R,32.354668,-89.398528
+MS,Roger F. Wicker,@SenatorWicker,R,32.354668,-89.398528
+MT,Jon Tester,@SenatorTester,D,46.879682,-110.362566
+MT,Steve Daines,@SteveDaines,R,46.879682,-110.362566
+NC,Richard Burr,@SenatorBurr,R,35.759573,-79.0193
+NC,Thom Tillis,@SenThomTillis,R,35.759573,-79.0193
+ND,Kevin Cramer,@SenKevinCramer,R,47.551493,-101.002012
+ND,John Hoeven,@SenJohnHoeven,R,47.551493,-101.002012
+NE,Deb Fischer,@SenatorFischer,R,41.492537,-99.901813
+NE,Ben Sasse,@SenSasse,R,41.492537,-99.901813
+NH,Margaret Wood Hassan,@SenatorHassan,D,43.193852,-71.572395
+NH,Jeanne Shaheen,@SenatorShaheen,D,43.193852,-71.572395
+NJ,Cory A. Booker,@SenBooker,D,40.058324,-74.405661
+NJ,Robert Menendez,@SenatorMenendez,D,40.058324,-74.405661
+NM,Martin Heinrich,@MartinHeinrich,D,34.97273,-105.032363
+NM,Ben Ray Luján,@benraylujan,D,34.97273,-105.032363
+NV,Catherine Cortez Masto,@SenCortezMasto,D,38.80261,-116.419389
+NV,Jacky Rosen,@SenJackyRosen,D,38.80261,-116.419389
+NY,Kirsten E. Gillibrand,@gillibrandny,D,43.299428,-74.217933
+NY,Charles E. Schumer,@SenSchumer,D,43.299428,-74.217933
+OH,Sherrod Brown,@SenSherrodBrown,D,40.417287,-82.907123
+OH,Rob Portman,@senrobportman,R,40.417287,-82.907123
+OK,James M. Inhofe,@JimInhofe,R,35.007752,-97.092877
+OK,James Lankford,@SenatorLankford,R,35.007752,-97.092877
+OR,Jeff Merkley,@SenJeffMerkley,D,43.804133,-120.554201
+OR,Ron Wyden,@RonWyden,D,43.804133,-120.554201
+PA,"Robert P. Casey, Jr.",@SenBobCasey,D,41.203322,-77.194525
+PA,Patrick J. Toomey,@SenToomey,R,41.203322,-77.194525
+RI,Jack Reed,@SenJackReed,D,41.580095,-71.477429
+RI,Sheldon Whitehouse,@SenWhitehouse,D,41.580095,-71.477429
+SC,Lindsey Graham,@LindseyGrahamSC,R,33.836081,-81.163725
+SC,Tim Scott,@SenatorTimScott,R,33.836081,-81.163725
+SD,Mike Rounds,@SenatorRounds,R,43.969515,-99.901813
+SD,John Thune,@SenJohnThune,R,43.969515,-99.901813
+TN,Lamar Alexander,@SenAlexander,R,35.517491,-86.580447
+TN,Marsha Blackburn,@MarshaBlackburn,R,35.517491,-86.580447
+TX,John Cornyn,@JohnCornyn,R,31.968599,-99.901813
+TX,Ted Cruz,@SenTedCruz,R,31.968599,-99.901813
+UT,Mike Lee,@SenMikeLee,R,39.32098,-111.093731
+UT,Mitt Romney,@SenatorRomney,R,39.32098,-111.093731
+VA,Tim Kaine,@timkaine,D,37.431573,-78.656894
+VA,Mark R. Warner,@MarkWarner,D,37.431573,-78.656894
+VT,Patrick J. Leahy,@SenatorLeahy,D,44.558803,-72.577841
+VT,Bernard Sanders,@BernieSanders,D,44.558803,-72.577841
+WA,Maria Cantwell,@SenatorCantwell,D,47.751074,-120.740139
+WA,Patty Murray,@PattyMurray,D,47.751074,-120.740139
+WI,Tammy Baldwin,@SenatorBaldwin,D,43.78444,-88.787868
+WI,Ron Johnson,@SenRonJohnson,R,43.78444,-88.787868
+WV,"Joe Manchin, III",@Sen_JoeManchin,D,38.597626,-80.454903
+WV,Shelley Moore Capito,@SenCapito,R,38.597626,-80.454903
+WY,John Barrasso,@SenJohnBarrasso,R,43.075968,-107.290284
+WY,Cynthia Lummis,@SenLummis,R,43.075968,-107.290284
