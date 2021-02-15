@@ -126,7 +126,7 @@ def calculate_similarity(text1, text2):
 
 def tweet_clusters():
     docs = read_tweet_docs()
-    cv = TfidfVectorizer(stop_words=tfidf_stop_words, ngram_range=(1,2))
+    cv = TfidfVectorizer(stop_words=tfidf_stop_words, ngram_range=(1,2), min_df = 0.05)
     tfidf_matrix = cv.fit_transform(docs)
     terms = cv.get_feature_names()
 
@@ -243,7 +243,7 @@ def tweet_clusters():
 
 def refresh_sim_data():
     docs = read_tweet_docs()
-    cv = TfidfVectorizer(stop_words=tfidf_stop_words, ngram_range=(1,2))
+    cv = TfidfVectorizer(stop_words=tfidf_stop_words, ngram_range=(1,2), min_df = 0.05)
     tfidf_matrix = cv.fit_transform(docs)
     X = np.array(tfidf_matrix.todense())
 
